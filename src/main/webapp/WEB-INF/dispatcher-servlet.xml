@@ -13,7 +13,7 @@
            http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!-- Activation des annotations Spring -->
-    <context:component-scan base-package="org.example.lifesafe"/>
+    <context:component-scan quoteAmount-package="org.example.lifesafe"/>
 
     <!-- Activation des fonctionnalités Spring MVC -->
     <mvc:annotation-driven/>

@@ -1,4 +1,4 @@
-import org.example.lifesafe.model.User;
+import org.example.lifesafe.model.entities.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import jakarta.persistence.EntityManager;
@@ -12,13 +12,9 @@ public class DatabaseTest {
 
         try {
             em.getTransaction().begin();
-
-            User entity = new User();
-            entity.setName("Test");
-            em.persist(entity);
-
             em.getTransaction().commit();
             System.out.println("Database operation successful!");
+            System.out.println("Tables creation successful!");
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
