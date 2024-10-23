@@ -7,6 +7,6 @@
 <body>
 <h1><%= "Hello from index!" %></h1>
 <br/>
-<a href="register">register form</a>
+<a href="user/register">register form</a>
 </body>
 </html>

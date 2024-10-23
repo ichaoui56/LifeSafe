@@ -1,4 +1,3 @@
-import org.example.lifesafe.model.entities.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import jakarta.persistence.EntityManager;
@@ -6,7 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 
 public class DatabaseTest {
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
         EntityManagerFactory emf = (EntityManagerFactory) context.getBean("entityManagerFactory");
         EntityManager em = emf.createEntityManager();
 
