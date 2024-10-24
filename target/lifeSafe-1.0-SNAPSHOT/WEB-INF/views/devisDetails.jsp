@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -27,12 +27,23 @@
     <div class="insurance-details">
         <h2>Insurance Information</h2>
         <p><strong>Insurance Type:</strong> ${devis.insurance.type}</p>
-        <p><strong>Car Model:</strong> ${devis.insurance.car.model}</p>
-        <p><strong>Car Brand:</strong> ${devis.insurance.car.brand}</p>
-        <p><strong>Car Use:</strong> ${devis.insurance.carUse}</p>
-        <p><strong>Driver Age:</strong> ${devis.insurance.driverAge}</p>
-        <p><strong>Driving History:</strong> ${devis.insurance.drivingHistory}</p>
-        <p><strong>Last Accident Date:</strong> ${devis.insurance.lastAccidentDate}</p>
+
+        <!-- Conditional display for Automobile Insurance -->
+        <c:if test="${devis.insurance.type.name() == 'Automobile'}">
+            <p><strong>Car Model:</strong> ${devis.insurance.car.model}</p>
+            <p><strong>Car Brand:</strong> ${devis.insurance.car.brand}</p>
+            <p><strong>Car Use:</strong> ${devis.insurance.carUse}</p>
+            <p><strong>Driver Age:</strong> ${devis.insurance.driverAge}</p>
+            <p><strong>Driving History:</strong> ${devis.insurance.drivingHistory}</p>
+            <p><strong>Last Accident Date:</strong> ${devis.insurance.lastAccidentDate}</p>
+        </c:if>
+
+        <!-- Conditional display for Health Insurance -->
+        <c:if test="${devis.insurance.type.name() == 'Health'}">
+            <p><strong>Age:</strong> ${devis.insurance.age}</p>
+            <p><strong>Chronic Illness:</strong> ${devis.insurance.chronicIllness ? 'Yes' : 'No'}</p>
+            <p><strong>Medical Coverage Type:</strong> ${devis.insurance.medicalCoverageType}</p>
+        </c:if>
     </div>
 
     <!-- Accept or reject options -->
