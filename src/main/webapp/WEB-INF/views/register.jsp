@@ -11,7 +11,7 @@
     <div style="color: red;">${error}</div>
 </c:if>
 
-<form action="${pageContext.request.contextPath}/user/register" method="post">
+<form action="${pageContext.request.contextPath}/auth/register" method="post">
     <label>Name:</label><br>
     <input type="text" name="name" required><br><br>
 

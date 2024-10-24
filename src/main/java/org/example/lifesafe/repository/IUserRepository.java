@@ -4,6 +4,6 @@ import org.example.lifesafe.model.entities.User;
 
 import java.util.Optional;
 
-public interface IUserRepository extends DefaultRepository<User> {
+public interface IUserRepository extends IDefaultRepository<User> {
     Optional<User> findByEmail(String email);
 }

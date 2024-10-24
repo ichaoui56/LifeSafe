@@ -2,13 +2,13 @@ package org.example.lifesafe.repository.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.example.lifesafe.repository.DefaultRepository;
+import org.example.lifesafe.repository.IDefaultRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-public abstract class DefaultRepositoryImpl<Entity> implements DefaultRepository<Entity> {
+public abstract class DefaultRepositoryImpl<Entity> implements IDefaultRepository<Entity> {
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -23,6 +23,7 @@ public abstract class DefaultRepositoryImpl<Entity> implements DefaultRepository
     @Transactional
     public boolean create(Entity entity) {
         try {
+            System.out.println("this is the entity " + entity.toString());
             entityManager.persist(entity);
             return true;
         } catch (Exception e) {
@@ -58,7 +59,7 @@ public abstract class DefaultRepositoryImpl<Entity> implements DefaultRepository
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Entity> findById(Long id) {
+    public Optional<Entity> findById(int id) {
         try {
             Entity entity = entityManager.find(entityType, id);
             return Optional.ofNullable(entity);
