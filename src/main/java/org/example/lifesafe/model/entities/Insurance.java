@@ -2,7 +2,6 @@ package org.example.lifesafe.model.entities;
 
 import jakarta.persistence.*;
 import org.example.lifesafe.model.enums.InsuranceType;
-
 import java.util.List;
 
 @Entity
@@ -21,26 +20,27 @@ public abstract class Insurance {
     @Column(nullable = false)
     private InsuranceType type;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "insurance", cascade = CascadeType.ALL)
     private List<Devis> devisList;
 
-    @OneToMany(mappedBy = "insurance", cascade = CascadeType.ALL)
-    private List<Contract> contracts;
+    public Insurance() {}
 
-
-    public Insurance(){}
-
-    public Insurance( double quoteAmount, InsuranceType type){
+    public Insurance(double quoteAmount, InsuranceType type, User user) {
         this.quoteAmount = quoteAmount;
         this.type = type;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.user = user;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public double getQuoteAmount() {
@@ -59,12 +59,12 @@ public abstract class Insurance {
         this.type = type;
     }
 
-    public List<Contract> getContracts() {
-        return contracts;
+    public User getUser() {
+        return user;
     }
 
-    public void setContracts(List<Contract> contracts) {
-        this.contracts = contracts;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Devis> getDevisList() {

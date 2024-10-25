@@ -2,11 +2,12 @@ package org.example.lifesafe.model.entities;
 
 import jakarta.persistence.*;
 import org.example.lifesafe.model.enums.DevisStatus;
-
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "devis")
 public class Devis {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,17 +23,15 @@ public class Devis {
     private DevisStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "insurance_id")
+    @JoinColumn(name = "insurance_id", nullable = false)
     private Insurance insurance;
+
+    @OneToOne(mappedBy = "devis", cascade = CascadeType.ALL)
+    private Contract contract;
 
     public Devis() {}
 
-    public Devis(User user, Insurance insurance, LocalDate requestDate, double calculatedQuote, DevisStatus status) {
-        this.user = user;
+    public Devis(Insurance insurance, LocalDate requestDate, double calculatedQuote, DevisStatus status) {
         this.insurance = insurance;
         this.requestDate = requestDate;
         this.calculatedQuote = calculatedQuote;
@@ -45,22 +44,6 @@ public class Devis {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Insurance getInsurance() {
-        return insurance;
-    }
-
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
     }
 
     public LocalDate getRequestDate() {
@@ -87,4 +70,19 @@ public class Devis {
         this.status = status;
     }
 
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
 }

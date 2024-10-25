@@ -29,8 +29,8 @@ public class Automobile extends Insurance {
 
     public Automobile(){}
 
-    public Automobile(double quoteAmount, InsuranceType type, int driverAge, CarUse carUse, String drivingHistory, Car car, LocalDate lastAccidentDate) {
-        super(500, type);
+    public Automobile(double quoteAmount, InsuranceType type, int driverAge, CarUse carUse, String drivingHistory, Car car, LocalDate lastAccidentDate, User user) {
+        super(500, type, user);
         this.driverAge = driverAge;
         this.carUse = carUse;
         this.drivingHistory = drivingHistory;

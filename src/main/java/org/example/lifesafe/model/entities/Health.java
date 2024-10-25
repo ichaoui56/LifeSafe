@@ -21,8 +21,8 @@ public class Health  extends Insurance{
 
     public Health(){}
 
-    public Health(double quoteAmount, InsuranceType type, int age, boolean chronicIllness, CoverType medicalCoverageType){
-        super(150,type);
+    public Health(double quoteAmount, InsuranceType type, int age, boolean chronicIllness, CoverType medicalCoverageType, User user){
+        super(150,type, user);
         this.age = age;
         this.chronicIllness = chronicIllness;
         this.medicalCoverageType = medicalCoverageType;

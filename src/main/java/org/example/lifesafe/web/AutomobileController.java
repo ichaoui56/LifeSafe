@@ -65,11 +65,12 @@ public class AutomobileController {
 
             automobile.setCar(optionalCar.get());
             automobile.setType(InsuranceType.Automobile);
+            automobile.setQuoteAmount(500);
             insuranceService.addInsurance(automobile);
 
             double totalQuote = calculateDevis.calculateAutomobileDevis(automobile);
 
-            Devis devis = new Devis(loggedInUser,automobile, LocalDate.now(),totalQuote, DevisStatus.Pending);
+            Devis devis = new Devis(automobile, LocalDate.now(),totalQuote, DevisStatus.Pending);
 
             devisService.addDevis(devis);
 

@@ -48,12 +48,13 @@ public class HousingController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
 
         housing.setType(InsuranceType.Housing);
+        housing.setQuoteAmount(300);
         insuranceService.addInsurance(housing);
 
         double totalQuote = calculateDevis.calculateHousingDevis(housing);
 
         System.out.println(totalQuote);
-        Devis devis = new Devis(loggedInUser, housing, LocalDate.now(), totalQuote, DevisStatus.Pending);
+        Devis devis = new Devis(housing, LocalDate.now(), totalQuote, DevisStatus.Pending);
         devisService.addDevis(devis);
 
         return "redirect:/devis/" + devis.getId();

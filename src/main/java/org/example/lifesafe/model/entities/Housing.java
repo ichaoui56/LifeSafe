@@ -25,8 +25,8 @@ public class Housing extends Insurance {
     public Housing() {
     }
 
-    public Housing(double quoteAmount, InsuranceType type, double homeValue, String homeType, String location, String security) {
-        super(300, type);
+    public Housing(double quoteAmount, InsuranceType type, double homeValue, String homeType, String location, String security, User user) {
+        super(300, type, user);
         this.homeValue = homeValue;
         this.homeType = homeType;
         this.location = location;

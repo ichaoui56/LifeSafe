@@ -55,17 +55,16 @@ public class HealthController {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
 
         health.setType(InsuranceType.Health);
+        health.setQuoteAmount(150);
         insuranceService.addInsurance(health);
 
         double totalQuote = calculateDevis.calculateHealthDevis(health);
 
         System.out.println(totalQuote);
-        Devis devis = new Devis(loggedInUser, health, LocalDate.now(), totalQuote, DevisStatus.Pending);
+        Devis devis = new Devis(health, LocalDate.now(), totalQuote, DevisStatus.Pending);
         devisService.addDevis(devis);
 
         return "redirect:/devis/" + devis.getId();
 
     }
-
-
 }
