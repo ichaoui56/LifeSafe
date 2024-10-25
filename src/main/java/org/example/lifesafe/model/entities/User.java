@@ -1,9 +1,6 @@
 package org.example.lifesafe.model.entities;
 
 import jakarta.persistence.*;
-//import jakarta.validation.constraints.NotEmpty;
-
-
 import java.util.List;
 
 @Entity
@@ -30,12 +27,9 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Devis> devisList;
+    private List<Insurance> insurances;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Contract> contracts;
-
-    public User(){}
+    public User() {}
 
     public User(String name, String address, String email, String phone, String password) {
         this.name = name;
@@ -93,20 +87,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Contract> getContracts() {
-        return contracts;
+    public List<Insurance> getInsurances() {
+        return insurances;
     }
 
-    public void setContracts(List<Contract> contracts) {
-        this.contracts = contracts;
+    public void setInsurances(List<Insurance> insurances) {
+        this.insurances = insurances;
     }
-
-    public List<Devis> getDevisList() {
-        return devisList;
-    }
-
-    public void setDevisList(List<Devis> devisList) {
-        this.devisList = devisList;
-    }
-
 }

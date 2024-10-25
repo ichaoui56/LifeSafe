@@ -6,6 +6,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "contracts")
 public class Contract {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -22,31 +23,26 @@ public class Contract {
     @Column(nullable = false)
     private boolean isActive;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "insurance_id")
-    private Insurance insurance;
+    @OneToOne
+    @JoinColumn(name = "devis_id", nullable = false)
+    private Devis devis;
 
     public Contract() {}
 
-    public Contract(LocalDate subscriptionDate, LocalDate expirationDate, String document, boolean isActive, User user, Insurance insurance) {
+    public Contract(LocalDate subscriptionDate, LocalDate expirationDate, String document, boolean isActive, Devis devis) {
         this.subscriptionDate = subscriptionDate;
         this.expirationDate = expirationDate;
         this.document = document;
-        this.user = user;
-        this.insurance = insurance;
         this.isActive = isActive;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.devis = devis;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDate getSubscriptionDate() {
@@ -77,15 +73,15 @@ public class Contract {
         return isActive;
     }
 
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
-    public Insurance getInsurance() {
-        return insurance;
+    public Devis getDevis() {
+        return devis;
     }
 
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
+    public void setDevis(Devis devis) {
+        this.devis = devis;
     }
 }
