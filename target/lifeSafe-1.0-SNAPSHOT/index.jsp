@@ -7,6 +7,10 @@
 <body>
 <h1><%= "Hello from index!" %></h1>
 <br/>
-<a href="user/register">register form</a>
+<li><a href="#">Home</a></li>
+<li><a href="insurance/automobile">Automobile</a></li>
+<li><a href="insurance/housing">Housing</a></li>
+<li><a href="insurance/health">Health</a></li>
+<a href="auth/register">register form</a>
 </body>
 </html>

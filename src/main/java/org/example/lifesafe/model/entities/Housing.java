@@ -8,35 +8,36 @@ import org.example.lifesafe.model.enums.InsuranceType;
 @Entity
 @Table(name = "housing_insurances")
 
-public class Housing extends Insurance{
+public class Housing extends Insurance {
 
-    @Column(name="home_value", nullable= false)
+    @Column(name = "home_value", nullable = false)
     private double homeValue;
 
-    @Column(name="home_type", nullable = false)
+    @Column(name = "home_type", nullable = false)
     private String homeType;
 
     @Column(nullable = false)
     private String location;
 
-    @Column(name="security_system", nullable = false)
+    @Column(name = "security_system", nullable = false)
     private String securitySystem;
 
-    public Housing(){}
+    public Housing() {
+    }
 
-    public Housing(double quoteAmount, InsuranceType type, double homeValue, String homeType, String location, String security){
-        super(quoteAmount, type);
+    public Housing(double quoteAmount, InsuranceType type, double homeValue, String homeType, String location, String security) {
+        super(300, type);
         this.homeValue = homeValue;
         this.homeType = homeType;
-        this.location= location;
+        this.location = location;
         this.securitySystem = security;
     }
 
-    public double getValue() {
+    public double getHomeValue() {
         return homeValue;
     }
 
-    public void setValue(double value) {
+    public void setHomeValue(double value) {
         this.homeValue = value;
     }
 

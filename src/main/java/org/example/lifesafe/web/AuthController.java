@@ -1,7 +1,6 @@
 package org.example.lifesafe.web;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.example.lifesafe.model.entities.User;
 import org.example.lifesafe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,26 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/auth")
+public class AuthController {
 
     private final IUserService userService;
 
     @Autowired
-    public UserController(IUserService userService) {
+    public AuthController(IUserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+    public String showRegistrationForm() {
         return "register";
     }
 
     @PostMapping("/register")
     public String registerUser(User user, Model model) {
         if (userService.registerUser(user)) {
-            return "redirect:/user/login";
+            return "redirect:/auth/login";
         }
         model.addAttribute("error", "Email already exists.");
         return "register";

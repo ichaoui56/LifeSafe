@@ -1,7 +1,7 @@
 package org.example.lifesafe.model.entities;
 
 import jakarta.persistence.*;
-import org.example.lifesafe.model.enums.InsuranceType;
+import org.example.lifesafe.model.enums.DevisStatus;
 
 import java.time.LocalDate;
 
@@ -17,8 +17,9 @@ public class Devis {
     @Column(nullable = false)
     private double calculatedQuote;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String parameters;
+    private DevisStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -30,12 +31,12 @@ public class Devis {
 
     public Devis() {}
 
-    public Devis(User user, Insurance insurance, LocalDate requestDate, double calculatedQuote, String parameters) {
+    public Devis(User user, Insurance insurance, LocalDate requestDate, double calculatedQuote, DevisStatus status) {
         this.user = user;
         this.insurance = insurance;
         this.requestDate = requestDate;
         this.calculatedQuote = calculatedQuote;
-        this.parameters = parameters;
+        this.status = status;
     }
 
     public Long getId() {
@@ -78,11 +79,12 @@ public class Devis {
         this.calculatedQuote = calculatedQuote;
     }
 
-    public String getParameters() {
-        return parameters;
+    public DevisStatus getStatus() {
+        return status;
     }
 
-    public void setParameters(String parameters) {
-        this.parameters = parameters;
+    public void setStatus(DevisStatus status) {
+        this.status = status;
     }
+
 }

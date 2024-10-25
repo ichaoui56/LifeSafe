@@ -1,7 +1,10 @@
 package org.example.lifesafe.model.entities;
 
 import jakarta.persistence.*;
+import org.example.lifesafe.model.enums.CarUse;
 import org.example.lifesafe.model.enums.InsuranceType;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "automobile_insurances")
@@ -14,20 +17,25 @@ public class Automobile extends Insurance {
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="car_use",nullable = false)
-    private String carUse;
+    private CarUse carUse;
 
     @Column(name="driving_history",nullable = false)
     private String drivingHistory;
 
+    @Column(name = "last_accident_date")
+    private LocalDate lastAccidentDate;
+
     public Automobile(){}
 
-    public Automobile(double price, InsuranceType type, int driverAge, String vehicleUse, String drivingHistory, Car car){
-        super(price, type);
+    public Automobile(double quoteAmount, InsuranceType type, int driverAge, CarUse carUse, String drivingHistory, Car car, LocalDate lastAccidentDate) {
+        super(500, type);
         this.driverAge = driverAge;
-        this.carUse = vehicleUse;
+        this.carUse = carUse;
         this.drivingHistory = drivingHistory;
         this.car = car;
+        this.lastAccidentDate = lastAccidentDate;
     }
 
     public int getDriverAge() {
@@ -46,11 +54,11 @@ public class Automobile extends Insurance {
         this.car = car;
     }
 
-    public String getVehicleUse() {
+    public CarUse getCarUse() {
         return carUse;
     }
 
-    public void setVehicleUse(String carUse) {
+    public void setCarUse(CarUse carUse) {
         this.carUse = carUse;
     }
 
@@ -60,5 +68,24 @@ public class Automobile extends Insurance {
 
     public void setDrivingHistory(String drivingHistory) {
         this.drivingHistory = drivingHistory;
+    }
+
+    public LocalDate getLastAccidentDate() {
+        return lastAccidentDate;
+    }
+
+    public void setLastAccidentDate(LocalDate lastAccidentDate) {
+        this.lastAccidentDate = lastAccidentDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Automobile{" +
+                "driverAge=" + driverAge +
+                ", car=" + car +
+                ", carUse='" + carUse + '\'' +
+                ", drivingHistory='" + drivingHistory + '\'' +
+                ", lastAccidentDate=" + lastAccidentDate +
+                '}';
     }
 }
