@@ -1,9 +1,6 @@
 package org.example.lifesafe.web;
 
-import org.example.lifesafe.model.entities.Automobile;
-import org.example.lifesafe.model.entities.Car;
-import org.example.lifesafe.model.entities.Devis;
-import org.example.lifesafe.model.entities.User;
+import org.example.lifesafe.model.entities.*;
 import org.example.lifesafe.model.enums.CarUse;
 import org.example.lifesafe.model.enums.DevisStatus;
 import org.example.lifesafe.model.enums.InsuranceType;
@@ -47,8 +44,34 @@ public class AutomobileController {
         return "automobile";
     }
 
+    @GetMapping("/checkInsurance")
+    public String checkInsurance(HttpSession session, Model model) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+
+        if (loggedInUser == null) {
+            return "redirect:/auth/login";
+        }
+        boolean hasActiveInsurance = false;
+
+        if (insuranceService.checkUserHasActiveInsurance(loggedInUser.getId(), InsuranceType.Automobile)) {
+            hasActiveInsurance = true;
+            model.addAttribute("message", "You already have an active automobile insurance contract.");
+            model.addAttribute("alertClass", "alert-danger");
+        }
+
+
+        if (!hasActiveInsurance) {
+            model.addAttribute("message", "You do not have any active insurance contracts.");
+            model.addAttribute("alertClass", "alert-success");
+            return "redirect:/automobile/addForm";
+        }
+
+        return "redirect:/user/profile";
+    }
+
     @GetMapping("/addForm")
-    public String showInsuranceAutomobileForm(Model model) {
+    public String showInsuranceAutomobileForm(Model model, HttpSession session) {
         List<Car> cars = carService.findAllCars();
         model.addAttribute("cars", cars);
         model.addAttribute("carUses", CarUse.values());
@@ -66,9 +89,10 @@ public class AutomobileController {
             automobile.setCar(optionalCar.get());
             automobile.setType(InsuranceType.Automobile);
             automobile.setQuoteAmount(500);
+            automobile.setUser(loggedInUser);
             insuranceService.addInsurance(automobile);
 
-            double totalQuote = calculateDevis.calculateAutomobileDevis(automobile);
+            double totalQuote = insuranceService.calculateAutomobileDevis(automobile);
 
             Devis devis = new Devis(automobile, LocalDate.now(),totalQuote, DevisStatus.Pending);
 

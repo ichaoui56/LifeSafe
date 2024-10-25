@@ -12,17 +12,8 @@
         <section>
             <div class="href-target" id="input-types"></div>
             <h1>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                     class="feather feather-align-justify">
-                    <line x1="21" y1="10" x2="3" y2="10"/>
-                    <line x1="21" y1="6" x2="3" y2="6"/>
-                    <line x1="21" y1="14" x2="3" y2="14"/>
-                    <line x1="21" y1="18" x2="3" y2="18"/>
-                </svg>
-                Input types
+                Automobile add form
             </h1>
-            <p>All available input types are included</p>
             <form action="${pageContext.request.contextPath}/automobile/addInsurance" method="post">
                 <div class="nice-form-group">
                     <label for="driverAge">Driver Age</label>
@@ -57,9 +48,21 @@
                     <input type="date" id="sinisterTime" name="lastAccidentDate" required/>
                 </div>
 
-                <div class="nice-form-group">
-                    <button type="submit">Submit Insurance</button>
-                </div>
+                <button class="animated-button" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
+                        <path
+                                d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+                        ></path>
+                    </svg>
+                    <span class="text">ADD INSURANCE</span>
+                    <span class="circle"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="arr-1" viewBox="0 0 24 24">
+                        <path
+                                d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+                        ></path>
+                    </svg>
+                </button>
+
             </form>
         </section>
     </main>

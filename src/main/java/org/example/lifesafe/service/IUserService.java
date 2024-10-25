@@ -2,6 +2,8 @@ package org.example.lifesafe.service;
 
 import org.example.lifesafe.model.entities.User;
 
+import java.util.Optional;
+
 public interface IUserService {
     boolean registerUser(User user);
     boolean loginUser(String email, String password);
@@ -10,4 +12,6 @@ public interface IUserService {
 
     String hashPassword(String password);
     boolean checkPassword(String plainPassword, String hashedPassword);
+
+    Optional<User> findUserWithInsurances(int userId);
 }

@@ -34,7 +34,23 @@ public class ContractController {
     @GetMapping("/addForm/{devisId}")
     public String showContractForm(@PathVariable("devisId") int devisId, Model model) {
         model.addAttribute("devisId", devisId);
-        return "forms/contractForm"; // Adjust path if necessary
+        return "forms/contractForm";
+    }
+
+    @GetMapping("/details")
+    public String showContractDetails(@RequestParam("contractId") int contractId, Model model) {
+        Optional<Contract> contractOpt = contractService.findById(contractId);
+
+        if (contractOpt.isPresent()) {
+            Contract contract = contractOpt.get();
+            Devis devis = contract.getDevis();
+
+            model.addAttribute("contract", contract);
+            model.addAttribute("devis", devis);
+            return "contractDetails";
+        }
+
+        return "redirect:/error";
     }
 
     @PostMapping("/add")
@@ -45,31 +61,29 @@ public class ContractController {
         if (devisOpt.isPresent()) {
             Devis devis = devisOpt.get();
             Contract contract = new Contract();
-
             contract.setSubscriptionDate(LocalDate.now());
-            contract.setExpirationDate(LocalDate.now().plusMonths(1));  // Example duration
+            contract.setExpirationDate(LocalDate.now().plusMonths(1));
             contract.setActive(true);
             contract.setDevis(devis);
 
-            // Save the uploaded document to a file
             try {
-                // Use the absolute path to save the uploaded file
-                String filePath = "/Users/mac/Documents/GitHub/LifeSafe/src/main/webapp/files/" + document.getOriginalFilename(); // Updated path
+
+                String filePath = "/Users/mac/Documents/GitHub/LifeSafe/src/main/webapp/files/" + document.getOriginalFilename();
                 File file = new File(filePath);
                 try (FileOutputStream fos = new FileOutputStream(file)) {
                     fos.write(document.getBytes());
-                    contract.setDocument(filePath);  // Store the file path in the Contract
+                    contract.setDocument(filePath);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                return "redirect:/error";  // Redirect to an error page if needed
+                return "redirect:/error";
             }
 
 
             contractService.addContract(contract);
-            return "redirect:/contracts/success";  // Redirect to a success page or contract list
+            return "redirect:/";
         } else {
-            return "redirect:/devis";  // Redirect to Devis list if not found
+            return "redirect:/devis,";
         }
     }
 }

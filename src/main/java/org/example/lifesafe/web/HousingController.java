@@ -37,6 +37,30 @@ public class HousingController {
         return "housing";
     }
 
+    @GetMapping("/checkInsurance")
+    public String checkInsurance(HttpSession session, Model model) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/auth/login";
+        }
+        boolean hasActiveInsurance = false;
+
+        if (insuranceService.checkUserHasActiveInsurance(loggedInUser.getId(), InsuranceType.Housing)) {
+            hasActiveInsurance = true;
+            model.addAttribute("message", "You already have an active housing insurance contract.");
+            model.addAttribute("alertClass", "alert-danger");
+        }
+
+        if (!hasActiveInsurance) {
+            model.addAttribute("message", "You do not have any active insurance contracts.");
+            model.addAttribute("alertClass", "alert-success");
+            return "redirect:/housing/addForm";
+        }
+
+        return "redirect:/user/profile";
+    }
+
     @GetMapping("/addForm")
     public String showInsuranceHousingForm(Model model) {
         return "forms/housingForm";
@@ -49,9 +73,10 @@ public class HousingController {
 
         housing.setType(InsuranceType.Housing);
         housing.setQuoteAmount(300);
+        housing.setUser(loggedInUser);
         insuranceService.addInsurance(housing);
 
-        double totalQuote = calculateDevis.calculateHousingDevis(housing);
+        double totalQuote = insuranceService.calculateHousingDevis(housing);
 
         System.out.println(totalQuote);
         Devis devis = new Devis(housing, LocalDate.now(), totalQuote, DevisStatus.Pending);

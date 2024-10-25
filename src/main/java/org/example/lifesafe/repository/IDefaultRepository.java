@@ -1,5 +1,11 @@
 package org.example.lifesafe.repository;
 
+import org.example.lifesafe.model.entities.Contract;
+import org.example.lifesafe.model.entities.Insurance;
+import org.example.lifesafe.model.entities.User;
+import org.example.lifesafe.model.enums.InsuranceType;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 

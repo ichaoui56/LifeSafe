@@ -1,6 +1,7 @@
 package org.example.lifesafe.web;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.example.lifesafe.model.entities.User;
 import org.example.lifesafe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,15 @@ public class AuthController {
         }
         model.addAttribute("error", "Invalid email or password.");
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logoutUser(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/auth/login";
     }
 
 }

@@ -43,6 +43,30 @@ public class HealthController {
         return "health";
     }
 
+    @GetMapping("/checkInsurance")
+    public String checkInsurance(HttpSession session, Model model) {
+
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/auth/login";
+        }
+        boolean hasActiveInsurance = false;
+
+        if (insuranceService.checkUserHasActiveInsurance(loggedInUser.getId(), InsuranceType.Health)) {
+            hasActiveInsurance = true;
+            model.addAttribute("message", "You already have an active health insurance contract.");
+            model.addAttribute("alertClass", "alert-danger");
+        }
+
+        if (!hasActiveInsurance) {
+            model.addAttribute("message", "You do not have any active insurance contracts.");
+            model.addAttribute("alertClass", "alert-success");
+            return "redirect:/health/addForm";
+        }
+
+        return "redirect:/user/profile";
+    }
+
     @GetMapping("/addForm")
     public String showInsuranceHealthForm(Model model) {
         model.addAttribute("coverTypes", CoverType.values());
@@ -56,9 +80,10 @@ public class HealthController {
 
         health.setType(InsuranceType.Health);
         health.setQuoteAmount(150);
+        health.setUser(loggedInUser);
         insuranceService.addInsurance(health);
 
-        double totalQuote = calculateDevis.calculateHealthDevis(health);
+        double totalQuote = insuranceService.calculateHealthDevis(health);
 
         System.out.println(totalQuote);
         Devis devis = new Devis(health, LocalDate.now(), totalQuote, DevisStatus.Pending);

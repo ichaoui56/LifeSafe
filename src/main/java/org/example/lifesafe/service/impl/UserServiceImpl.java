@@ -52,4 +52,10 @@ public class UserServiceImpl implements IUserService {
     public boolean checkPassword(String plainPassword, String hashedPassword) {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }
+
+    @Override
+    public Optional<User> findUserWithInsurances(int userId) {
+        return userRepository.findById(userId);
+    }
+
 }
