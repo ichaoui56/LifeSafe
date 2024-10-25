@@ -44,6 +44,14 @@
             <p><strong>Chronic Illness:</strong> ${devis.insurance.chronicIllness ? 'Yes' : 'No'}</p>
             <p><strong>Medical Coverage Type:</strong> ${devis.insurance.medicalCoverageType}</p>
         </c:if>
+
+        <!-- Conditional display for Housing Insurance -->
+        <c:if test="${devis.insurance.type.name() == 'Housing'}">
+            <p><strong>Home Type:</strong> ${devis.insurance.homeType}</p>
+            <p><strong>Home Value:</strong> ${devis.insurance.homeValue}</p>
+            <p><strong>Location:</strong> ${devis.insurance.location}</p>
+            <p><strong>Security System:</strong> ${devis.insurance.securitySystem}</p>
+        </c:if>
     </div>
 
     <!-- Accept or reject options -->

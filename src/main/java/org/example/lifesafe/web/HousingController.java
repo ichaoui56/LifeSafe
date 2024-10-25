@@ -1,11 +1,8 @@
 package org.example.lifesafe.web;
 
 import org.example.lifesafe.model.entities.*;
-import org.example.lifesafe.model.enums.CarUse;
-import org.example.lifesafe.model.enums.CoverType;
 import org.example.lifesafe.model.enums.DevisStatus;
 import org.example.lifesafe.model.enums.InsuranceType;
-import org.example.lifesafe.service.ICarService;
 import org.example.lifesafe.service.IDevisService;
 import org.example.lifesafe.service.IInsuranceService;
 import org.example.lifesafe.util.CalculateDevis;
@@ -17,20 +14,17 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
-@RequestMapping("/health")
-public class HealthController {
+@RequestMapping("/housing")
+public class HousingController {
 
     private final IInsuranceService insuranceService;
     private final IDevisService devisService;
     private final CalculateDevis calculateDevis;
 
     @Autowired
-    public HealthController(IInsuranceService insuranceService,
+    public HousingController(IInsuranceService insuranceService,
                             IDevisService devisService,
                             CalculateDevis calculateDevis) {
         this.insuranceService = insuranceService;
@@ -39,28 +33,27 @@ public class HealthController {
     }
 
     @GetMapping
-    public String showInsuranceHealth() {
-        return "health";
+    public String showInsuranceHousing() {
+        return "housing";
     }
 
     @GetMapping("/addForm")
-    public String showInsuranceHealthForm(Model model) {
-        model.addAttribute("coverTypes", CoverType.values());
-        return "forms/healthForm";
+    public String showInsuranceHousingForm(Model model) {
+        return "forms/housingForm";
     }
 
     @PostMapping("/addInsurance")
-    public String addInsurance(@ModelAttribute Health health, Model model, HttpSession session) {
+    public String addInsurance(@ModelAttribute Housing housing, Model model, HttpSession session) {
 
         User loggedInUser = (User) session.getAttribute("loggedInUser");
 
-        health.setType(InsuranceType.Health);
-        insuranceService.addInsurance(health);
+        housing.setType(InsuranceType.Housing);
+        insuranceService.addInsurance(housing);
 
-        double totalQuote = calculateDevis.calculateHealthDevis(health);
+        double totalQuote = calculateDevis.calculateHousingDevis(housing);
 
         System.out.println(totalQuote);
-        Devis devis = new Devis(loggedInUser, health, LocalDate.now(), totalQuote, DevisStatus.Pending);
+        Devis devis = new Devis(loggedInUser, housing, LocalDate.now(), totalQuote, DevisStatus.Pending);
         devisService.addDevis(devis);
 
         return "redirect:/devis/" + devis.getId();
